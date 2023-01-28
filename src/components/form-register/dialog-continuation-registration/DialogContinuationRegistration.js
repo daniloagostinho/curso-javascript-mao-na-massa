@@ -44,7 +44,7 @@ const verifyUserRegistrationData = () => {
         set: function (target, property, value) {
 
             const name = value.name;
-            const email = value.name;
+            const email = value.email;
             const age = value.age;
 
             loadValueInput(name, email, age)
@@ -78,9 +78,26 @@ const sendDataToBackend = async () => {
     const password = document.querySelector('.passwordInput').value;
     const confirmPassword = document.querySelector('.confirmPasswordInput').value;
 
+    const payload = {
+        name,
+        email,
+        age,
+        image,
+        password,
+        confirmPassword
+    }
+
+    console.log('payload', payload)
+
     if(checkEmptyModalFields(name, email, age, image, password, confirmPassword)) {
         if(checkPasswordEquals()) {
             configCloseModalSet();
+            await window.registerUser('http://localhost:3000/auth/register/user', payload)
+                .then(response => response.json())
+                .then(() => {
+                    alert('Cadastro realizado com sucesso!')
+                    onNavigate('/')
+                })
             alert('Cadastro realizado com sucesso!')
         } else {
             alert('As senhas não são iguais!')

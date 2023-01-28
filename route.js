@@ -8,7 +8,6 @@ const rootDiv = document.getElementById('main-page')
 rootDiv.innerHTML = routes[window.location.pathname]
 
 const onNavigate = (pathname) => {
-    debugger;
     window.history.pushState({}, window.location.origin + pathname)
     canGuard(pathname) ? rootDiv.innerHTML = routes[pathname] : '<app-login></app-login>'
 }
