@@ -79,14 +79,15 @@ const sendDataToBackend = async () => {
     const confirmPassword = document.querySelector('.confirmPasswordInput').value;
 
     if(checkEmptyModalFields(name, email, age, image, password, confirmPassword)) {
-        if(checkPassworsNotEquals(password, confirmPassword)) {
-            showErrorMessage();
-            configCloseModalRemove();
-        } else {
+        if(checkPasswordEquals()) {
             configCloseModalSet();
             alert('Cadastro realizado com sucesso!')
+        } else {
+            alert('As senhas não são iguais!')
+            return;
         }
     } else {
+        
         const btnCloseModal = document.querySelector('.btn-continuation-register')
         btnCloseModal.removeAttribute('data-dismiss')
         alert('Preencha os campos vazios!')
@@ -128,29 +129,34 @@ const checkEmptyModalFields = (name, email, age, image, password, confirmPasswor
     return false;
 }
 
-const checkPassworsNotEquals = (password, confirmPassword) => {
-    if(password !== confirmPassword) {
-        return true;
-    } 
-
-    return false;
-}
-
 const getValuePassword = (event) => {
     password = event.target.value;
     checkPasswordEquals();
+    checkPassworsNotEquals();
 }
 
 const getValueConfirmPassword = (event) => {
     confirmPassword = event.target.value;
     checkPasswordEquals();
+    checkPassworsNotEquals();
 }
 
 const checkPasswordEquals = () => {
     if(password !== '' && confirmPassword !== '' && password == confirmPassword) {
         hideErrorMessage()
+        return true;
+    }
+
+    return false;
+}
+
+const checkPassworsNotEquals = () => {
+    if(password !== '' && confirmPassword !== '' && password != confirmPassword) {
+        showErrorMessage();
+        configCloseModalRemove();
     }
 }
+
 
 if('customElements' in window) {
     customElements.define('app-dialog-continuation-registration', DialogContinuationRegistration)
