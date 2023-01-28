@@ -20,6 +20,8 @@ class DialogContinuationRegistration extends HTMLElement {
     }
 }
 
+let uploadedAvatar;
+
 const setImgAvatar = () => {
     const imgAvatar = document.querySelector('.avatar')
     imgAvatar.src = "assets/images/avatar-default.png"
@@ -38,7 +40,6 @@ const loadValueInput = (name, email, age) => {
 const verifyUserRegistrationData = () => {
     userRegistrationData = new Proxy({}, {
         set: function (target, property, value) {
-            console.log(target, property, value)
 
             const name = value.name;
             const email = value.name;
@@ -50,7 +51,83 @@ const verifyUserRegistrationData = () => {
     })
 }
 
+
+const uploadAvatar = (event) => {
+    if(event.target.files && event.target.files.length > 0) {
+        const file = event.target.files[0];
+
+        const reader = new FileReader();
+
+        reader.onload = (e) => (document.querySelector('.avatar').src = reader.result)
+
+        reader.readAsDataURL(file);
+
+        uploadedAvatar = file;
+    }
+}
+
 verifyUserRegistrationData();
+
+const sendDataToBackend = async () => {
+    const name = document.querySelector('.nameInput').value;
+    const email = document.querySelector('.emailInput').value;
+    const age = document.querySelector('.ageInput').value;
+    const image = uploadedAvatar;
+    const password = document.querySelector('.passwordInput').value;
+    const confirmPassword = document.querySelector('.confirmPasswordInput').value;
+
+    if(checkEmptyModalFields(name, email, age, image, password, confirmPassword)) {
+        if(checkPassworsNotEquals(password, confirmPassword)) {
+            showErrorMessage();
+            configCloseModalRemove();
+        } else {
+            configCloseModalSet();
+            alert('Cadastro realizado com sucesso!')
+        }
+    } else {
+        const btnCloseModal = document.querySelector('.btn-continuation-register')
+        btnCloseModal.removeAttribute('data-dismiss')
+        alert('Preencha os campos vazios!')
+    }
+}
+
+const showErrorMessage = () => {
+    const errorMessage = document.querySelector('.errorMessage')
+    errorMessage.style.display = 'block';
+}
+
+const configCloseModalSet = () => {
+    const btnCloseModal = document.querySelector('.btn-continuation-register')
+    btnCloseModal.setAttribute('data-dismiss', 'modal')
+}
+
+const configCloseModalRemove = () => {
+    const btnCloseModal = document.querySelector('.btn-continuation-register')
+    btnCloseModal.removeAttribute('data-dismiss')
+}
+
+const checkEmptyModalFields = (name, email, age, image, password, confirmPassword) => {
+    if(
+        name !== ''
+        && email !== ''
+        && age !== ''
+        && image !== undefined
+        && password !== ''
+        && confirmPassword !== ''
+    ) {
+        return true;
+    }
+
+    return false;
+}
+
+const checkPassworsNotEquals = (password, confirmPassword) => {
+    if(password !== confirmPassword) {
+        return true;
+    } 
+
+    return false;
+}
 
 if('customElements' in window) {
     customElements.define('app-dialog-continuation-registration', DialogContinuationRegistration)

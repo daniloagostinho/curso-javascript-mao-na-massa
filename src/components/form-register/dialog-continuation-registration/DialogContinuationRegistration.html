@@ -75,6 +75,7 @@
               class="form-control"
               aria-label="imgProfile"
               aria-describedby="imgProfile"
+              onchange="uploadAvatar(event)"
             />
           </div>
 
@@ -113,7 +114,9 @@
               "
               data-dismiss="modal"
               aria-label="Close"
-              type="button">
+              type="button"
+              onclick="sendDataToBackend()"
+              >
               FINALIZAR CADASTRO
             </button>
           </div>
