@@ -20,6 +20,37 @@ class DialogContinuationRegistration extends HTMLElement {
     }
 }
 
+const setImgAvatar = () => {
+    const imgAvatar = document.querySelector('.avatar')
+    imgAvatar.src = "assets/images/avatar-default.png"
+}
+
+setTimeout(() => {
+    setImgAvatar()
+}, 3000)
+
+const loadValueInput = (name, email, age) => {
+    document.querySelector('.nameInput').value = name;
+    document.querySelector('.emailInput').value = email;
+    document.querySelector('.ageInput').value = age;
+}
+
+const verifyUserRegistrationData = () => {
+    userRegistrationData = new Proxy({}, {
+        set: function (target, property, value) {
+            console.log(target, property, value)
+
+            const name = value.name;
+            const email = value.name;
+            const age = value.age;
+
+            loadValueInput(name, email, age)
+            target[property] = value;
+        }
+    })
+}
+
+verifyUserRegistrationData();
 
 if('customElements' in window) {
     customElements.define('app-dialog-continuation-registration', DialogContinuationRegistration)

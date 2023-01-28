@@ -20,6 +20,8 @@ class FormRegister extends HTMLElement {
     }
 }
 
+userRegistrationData = {}
+
 let nameInputValue;
 let emailInputValue;
 let ageInputValue;
@@ -29,8 +31,12 @@ const handleFormRegister = async () => {
     emailInputValue = document.querySelector('.emailInputValue').value;
     ageInputValue = document.querySelector('.ageInputValue').value;
 
+    setUserRegistrationData(nameInputValue, emailInputValue, ageInputValue)
+
+    console.log('userRegistrationData -->> ', userRegistrationData)
+
     if(verifyEmptyValues(nameInputValue, emailInputValue, ageInputValue)) {
-        alert('Abrir modal de continuar o cadastro!');
+        openDialogContinuationRegistration();
     } else {
         openDialogRequireField();
     }
@@ -47,6 +53,19 @@ const verifyEmptyValues = (name, email, age) => {
 const openDialogRequireField = () => {
     const dialog = document.querySelector('.modal-required-field')
     dialog.click();
+}
+
+const openDialogContinuationRegistration = () => {
+    const dialog = document.querySelector('.dialog-continuation-registration')
+    dialog.click();
+}
+
+const setUserRegistrationData = (name, email, age) => {
+    userRegistrationData.data = {
+        name, 
+        email,
+        age
+    }
 }
 
 if('customElements' in window) {
