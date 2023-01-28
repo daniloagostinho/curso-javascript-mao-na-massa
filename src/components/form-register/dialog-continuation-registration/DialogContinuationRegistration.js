@@ -21,6 +21,8 @@ class DialogContinuationRegistration extends HTMLElement {
 }
 
 let uploadedAvatar;
+let password;
+let confirmPassword;
 
 const setImgAvatar = () => {
     const imgAvatar = document.querySelector('.avatar')
@@ -96,6 +98,11 @@ const showErrorMessage = () => {
     errorMessage.style.display = 'block';
 }
 
+const hideErrorMessage = () => {
+    const errorMessage = document.querySelector('.errorMessage')
+    errorMessage.style.display = 'none';
+}
+
 const configCloseModalSet = () => {
     const btnCloseModal = document.querySelector('.btn-continuation-register')
     btnCloseModal.setAttribute('data-dismiss', 'modal')
@@ -127,6 +134,22 @@ const checkPassworsNotEquals = (password, confirmPassword) => {
     } 
 
     return false;
+}
+
+const getValuePassword = (event) => {
+    password = event.target.value;
+    checkPasswordEquals();
+}
+
+const getValueConfirmPassword = (event) => {
+    confirmPassword = event.target.value;
+    checkPasswordEquals();
+}
+
+const checkPasswordEquals = () => {
+    if(password !== '' && confirmPassword !== '' && password == confirmPassword) {
+        hideErrorMessage()
+    }
 }
 
 if('customElements' in window) {

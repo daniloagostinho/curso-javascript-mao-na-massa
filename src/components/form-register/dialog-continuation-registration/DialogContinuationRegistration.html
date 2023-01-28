@@ -86,6 +86,7 @@
               placeholder="Senha"
               aria-label="Password"
               aria-describedby="password"
+              oninput="getValuePassword(event)"
             />
           </div>
 
@@ -96,6 +97,7 @@
               placeholder="Confirmar"
               aria-label="confirmPassword"
               aria-describedby="confirmPassword"
+              oninput="getValueConfirmPassword(event)"
             />
             <br />
             <div style="display: none;" class="errorMessage">
