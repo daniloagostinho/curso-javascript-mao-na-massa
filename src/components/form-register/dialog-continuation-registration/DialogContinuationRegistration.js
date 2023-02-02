@@ -29,10 +29,6 @@ const setImgAvatar = () => {
     imgAvatar.src = "assets/images/avatar-default.png"
 }
 
-setTimeout(() => {
-    setImgAvatar()
-}, 3000)
-
 const loadValueInput = (name, email, age) => {
     document.querySelector('.nameInput').value = name;
     document.querySelector('.emailInput').value = email;
@@ -46,6 +42,8 @@ const verifyUserRegistrationData = () => {
             const name = value.name;
             const email = value.email;
             const age = value.age;
+
+            setImgAvatar();
 
             loadValueInput(name, email, age)
             target[property] = value;
@@ -87,18 +85,19 @@ const sendDataToBackend = async () => {
         confirmPassword
     }
 
-    console.log('payload', payload)
 
     if(checkEmptyModalFields(name, email, age, image, password, confirmPassword)) {
         if(checkPasswordEquals()) {
             configCloseModalSet();
             await window.registerUser('http://localhost:3000/auth/register/user', payload)
+                .then(catchApiDialogError)
                 .then(response => response.json())
                 .then(() => {
                     alert('Cadastro realizado com sucesso!')
                     onNavigate('/')
+                    
                 })
-            alert('Cadastro realizado com sucesso!')
+                .catch(handleDialogErrorTypes)
         } else {
             alert('As senhas não são iguais!')
             return;
@@ -109,6 +108,20 @@ const sendDataToBackend = async () => {
         btnCloseModal.removeAttribute('data-dismiss')
         alert('Preencha os campos vazios!')
     }
+}
+
+const handleDialogErrorTypes = (error) => {
+    if(error = 'Error: Unprocessable Entity') {
+        alert('Já existe uma conta com esse e-mail!');
+    }
+}
+
+const catchApiDialogError = (response) => {
+    if(!response.ok) {
+        throw Error(response.statusText)
+    }
+
+    return response;
 }
 
 const showErrorMessage = () => {
