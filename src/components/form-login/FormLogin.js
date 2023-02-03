@@ -22,9 +22,18 @@ const handleLogin = async () => {
     const email = document.querySelector('.email').value;
     const password = document.querySelector('.password').value;
 
+    const user = {
+        email,
+        password
+    }
+
     if(verifyFormLoginCompletedFields(email, password)) {
-        // requisição HTTP
-        alert('Login realizado com sucesso!')
+       await window.login('http://localhost:3000/auth/login', user)
+       .then(response => response.json())
+       .then(response => {
+            localStorage.setItem('token', response.token);
+            onNavigate('/dashboard')
+       })
         
     } else {
         openFormLoginDialofRequiredField();
