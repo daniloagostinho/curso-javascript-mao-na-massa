@@ -29,16 +29,38 @@ const handleLogin = async () => {
 
     if(verifyFormLoginCompletedFields(email, password)) {
        await window.login('http://localhost:3000/auth/login', user)
+       .then(catchApiFormLoginError)
        .then(response => response.json())
        .then(response => {
             localStorage.setItem('token', response.token);
             onNavigate('/dashboard')
        })
+       .catch(handleFormLoginErrrorTypes)
         
     } else {
-        openFormLoginDialofRequiredField();
+        openFormLoginDialogRequiredField();
 
     }
+}
+
+const catchApiFormLoginError = (response) => {
+    if(!response.ok) {
+        throw Error(response.statusText)
+    }
+
+    return response;
+}
+
+const handleFormLoginErrrorTypes = (error) => {
+    if(error == 'Error: Not Found') {
+        openFormLoginDialogUserNotFound();
+    }
+}
+
+
+const openFormLoginDialogUserNotFound = () => {
+    const dialog = document.querySelector('.modal-user-not-found');
+    dialog.click();
 }
 
 const verifyFormLoginCompletedFields = (email, password) => {
@@ -49,7 +71,7 @@ const verifyFormLoginCompletedFields = (email, password) => {
     return false;
 }
 
-const openFormLoginDialofRequiredField = () => {
+const openFormLoginDialogRequiredField = () => {
     const dialog = document.querySelector('.modal-required-field');
     dialog.click();
 }
