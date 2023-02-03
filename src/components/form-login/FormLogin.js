@@ -27,6 +27,7 @@ const handleLogin = async () => {
         alert('Login realizado com sucesso!')
     } else {
         openFormLoginDialofRequiredField();
+        
     }
 }
 
