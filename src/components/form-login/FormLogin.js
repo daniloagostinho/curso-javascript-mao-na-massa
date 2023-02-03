@@ -25,9 +25,10 @@ const handleLogin = async () => {
     if(verifyFormLoginCompletedFields(email, password)) {
         // requisição HTTP
         alert('Login realizado com sucesso!')
+        
     } else {
         openFormLoginDialofRequiredField();
-        
+
     }
 }
 

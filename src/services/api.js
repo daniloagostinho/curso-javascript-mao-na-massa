@@ -1,5 +1,4 @@
 window.registerUser = (url, user) => {
-    console.log('user -->> ', user)
     const formData = new FormData();
 
     formData.append('name', user.name)
@@ -12,5 +11,14 @@ window.registerUser = (url, user) => {
     return fetch(url, {
         method: 'POST',
         body: formData
+    })
+}
+
+window.login = (url, user) => {
+    return fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(user),
+        headers: {'Content-type': 'application/json'}
+        
     })
 }
