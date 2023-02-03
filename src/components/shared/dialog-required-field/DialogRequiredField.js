@@ -4,7 +4,7 @@ class DialogRequiredField extends HTMLElement {
 
         console.log('working -> ', this)
 
-        fetch('src/components/form-register/dialog-required-field/DialogRequiredField.html')
+        fetch('src/components/shared/dialog-required-field/DialogRequiredField.html')
         .then(response => response.text())
         .then(text => this.innerHTML = text)
 

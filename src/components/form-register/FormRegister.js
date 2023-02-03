@@ -33,16 +33,14 @@ const handleFormRegister = async () => {
 
     setUserRegistrationData(nameInputValue, emailInputValue, ageInputValue)
 
-    console.log('userRegistrationData -->> ', userRegistrationData)
-
-    if(verifyEmptyValues(nameInputValue, emailInputValue, ageInputValue)) {
+    if(verifyFormRegisterCompletedFields(nameInputValue, emailInputValue, ageInputValue)) {
         openDialogContinuationRegistration();
     } else {
         openDialogRequireField();
     }
 }
 
-const verifyEmptyValues = (name, email, age) => {
+const verifyFormRegisterCompletedFields = (name, email, age) => {
     if(name !== '' && email !== '' && age !== '') {
         return true;
     }

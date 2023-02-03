@@ -18,6 +18,31 @@ class FormLogin extends HTMLElement {
     }
 }
 
+const handleLogin = async () => {
+    const email = document.querySelector('.email').value;
+    const password = document.querySelector('.password').value;
+
+    if(verifyFormLoginCompletedFields(email, password)) {
+        // requisição HTTP
+        alert('Login realizado com sucesso!')
+    } else {
+        openFormLoginDialofRequiredField();
+    }
+}
+
+const verifyFormLoginCompletedFields = (email, password) => {
+    if(email !== '' && password !== '') {
+        return true;
+    }
+
+    return false;
+}
+
+const openFormLoginDialofRequiredField = () => {
+    const dialog = document.querySelector('.modal-required-field');
+    dialog.click();
+}
+
 if('customElements' in window) {
     customElements.define('app-form-login', FormLogin)
 }
