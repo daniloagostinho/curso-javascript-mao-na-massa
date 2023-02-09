@@ -22,38 +22,31 @@ class FormRegister extends HTMLElement {
 
 userRegistrationData = {}
 
-let nameInputValue;
-let emailInputValue;
-let ageInputValue;
 
 const handleFormRegister = async () => {
-    nameInputValue = document.querySelector('.nameInputValue').value;
-    emailInputValue = document.querySelector('.emailInputValue').value;
-    ageInputValue = document.querySelector('.ageInputValue').value;
+    let nameInputValue = document.querySelector('.nameInputValue').value;
+    let emailInputValue = document.querySelector('.emailInputValue').value;
+    let ageInputValue = document.querySelector('.ageInputValue').value;
 
     setUserRegistrationData(nameInputValue, emailInputValue, ageInputValue)
 
-    if(verifyFormRegisterCompletedFields(nameInputValue, emailInputValue, ageInputValue)) {
-        openDialogContinuationRegistration();
-    } else {
+    if(!verifyFormRegisterFieldFill(nameInputValue, emailInputValue, ageInputValue)) {
         openDialogRequireField();
+        return;
     }
+    
+
+    continueRegistrationModal();
 }
 
-const verifyFormRegisterCompletedFields = (name, email, age) => {
-    if(name !== '' && email !== '' && age !== '') {
-        return true;
-    }
-
-    return false;
-}
+const verifyFormRegisterFieldFill = (name, email, age) => name !== '' && email !== '' && age !== '';
 
 const openDialogRequireField = () => {
     const dialog = document.querySelector('.modal-required-field')
     dialog.click();
 }
 
-const openDialogContinuationRegistration = () => {
+const continueRegistrationModal = () => {
     const dialog = document.querySelector('.dialog-continuation-registration')
     dialog.click();
 }
