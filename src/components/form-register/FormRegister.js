@@ -20,8 +20,6 @@ class FormRegister extends HTMLElement {
     }
 }
 
-userRegistrationData = {}
-
 
 const handleFormRegister = async () => {
     let nameInputValue = document.querySelector('.nameInputValue').value;
@@ -52,7 +50,7 @@ const continueRegistrationModal = () => {
 }
 
 const setUserRegistrationData = (name, email, age) => {
-    userRegistrationData.data = {
+    window.userRegistrationData.data = {
         name, 
         email,
         age

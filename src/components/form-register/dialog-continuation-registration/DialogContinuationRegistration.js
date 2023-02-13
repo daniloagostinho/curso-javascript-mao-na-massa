@@ -36,7 +36,7 @@ const loadValueInput = (name, email, age) => {
 }
 
 const verifyUserRegistrationData = () => {
-    userRegistrationData = new Proxy({}, {
+    window.userRegistrationData = new Proxy({}, {
         set: function (target, property, value) {
 
             const name = value.name;
@@ -95,7 +95,6 @@ const sendDataToBackend = async () => {
                 .then(() => {
                     alert('Cadastro realizado com sucesso!')
                     onNavigate('/')
-                    
                 })
                 .catch(handleDialogErrorTypes)
         } else {
