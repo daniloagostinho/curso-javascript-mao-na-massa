@@ -1,8 +1,9 @@
 const routes = {
-    '/': '<app-dashboard></app-dashboard>',
-    '/index.html': '<app-dashboard></app-dashboard>',
+    '/': '<app-login></app-login>',
+    '/index.html': '<app-login></app-login>',
     '/dashboard': '<app-dashboard></app-dashboard>'
 }
+
 
 const rootDiv = document.getElementById('main-page')
 rootDiv.innerHTML = routes[window.location.pathname]
