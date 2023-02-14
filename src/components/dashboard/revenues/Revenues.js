@@ -15,6 +15,7 @@ class Revenues extends HTMLElement {
         setTimeout(() => {
             defineInitMonth();
             getRegisterRevenues();
+            initTableConfig();
         }, 1000)
     }
 
@@ -26,6 +27,7 @@ class Revenues extends HTMLElement {
 let monthSelected;
 let emptyResponse;
 let arrRevenues;
+let tbody;
 
 const defineInitMonth = () => {
     let date = new Date();
@@ -48,6 +50,7 @@ const getRegisterRevenues = async () => {
         .then(response => response.json())
         .then(response => {
             let arr = [];
+
             if(response.result.length === 0) {
                 emptyResponse = true;
                 blockRegisterRecipes.style.display = 'block';
@@ -62,7 +65,66 @@ const getRegisterRevenues = async () => {
                 arrRevenues = arr;
             }
             spinner.style.display = 'none';
+            buildTable(arr);
+            updateTableRows(arr);
         })
+}
+
+const buildTable = (arr) => {
+    
+}
+
+const initTableConfig = () => {
+    let table = document.createElement('table');
+    table.classList.add('table');
+
+    const thead = document.createElement('thead');
+    table.appendChild(thead);
+
+    thead.innerHTML = '';
+
+    const titlesTable = [
+        "Tipo de Receita",
+        "Valor",
+        "Data de Entrada",
+        "Id",
+        "Ações"
+    ];
+
+    const headerRow = document.createElement('tr');
+    
+    titlesTable.forEach(title => {
+        const headerCell = document.createElement('th');
+        headerCell.textContent = title;
+        headerRow.appendChild(headerCell)
+    })
+    
+    thead.appendChild(headerRow);
+    document.querySelector('.table-container').appendChild(table);
+    
+    tbody = document.createElement('tbody');
+    table.appendChild(tbody)
+}
+
+const updateTableRows = (arr) => {
+    tbody.innerHTML = '';
+
+    arr.forEach(item => {
+        console.log(item)
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${item.typeRevenue}</td>
+            <td>${item.value}</td>
+            <td>${item.dateEntry}</td>
+            <td>${item._id}</td>
+            <td>
+                <img class="image" src="${item.actions[0]}" />
+                <img class="image" src="${item.actions[1]}" />
+            </td>
+        `;
+
+        tbody.appendChild(tr)
+    })
 }
 
 if('customElements' in window) {
