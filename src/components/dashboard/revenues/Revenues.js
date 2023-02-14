@@ -140,6 +140,26 @@ const buildPagination = (arr) => {
 
 }
 
+const searchRevenues = (event) => {
+    const noResult = document.querySelector('.no-result');
+    const searchTerm = event.target.value.toLowerCase();
+
+    const filteredArray = arrRevenues.filter(item => {
+        const text = item.typeRevenue.toLowerCase();
+        return text.includes(searchTerm)
+    })
+
+    if(filteredArray.length > 0) {
+        noResult.style.display = 'none';
+        updateTableRows(paginate(filteredArray, itemsPerPage, currentPage));
+    } else {
+        noResult.style.display = 'block';
+        const tableBody = document.querySelector('.table tbody');
+        tableBody.innerHTML = '';
+    }
+}
+
+
 const paginate = (arr, itemsPerPage, currentPage) => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     return arr.slice(startIndex, startIndex + itemsPerPage);
