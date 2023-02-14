@@ -28,6 +28,8 @@ let monthSelected;
 let emptyResponse;
 let arrRevenues;
 let tbody;
+let currentPage = 1;
+let itemsPerPage = 3;
 
 const defineInitMonth = () => {
     let date = new Date();
@@ -65,13 +67,82 @@ const getRegisterRevenues = async () => {
                 arrRevenues = arr;
             }
             spinner.style.display = 'none';
-            buildTable(arr);
-            updateTableRows(arr);
+            buildPagination(arr);
         })
 }
 
-const buildTable = (arr) => {
-    
+const createPagination = () => {
+    let paginationHTML = `
+        <ul class="pagination">
+            <li class="page-item">
+                <button type="button" class="btn btn-outline-dark page-link prev" disabled>Anterior</button>
+            </li>
+            <li class="page-item">
+                <button type="button" class="btn btn-outline-dark page-link next" disabaled>Próximo</button>
+            </li>
+        </ul>
+    `;
+
+    return paginationHTML;
+}
+
+const buildPagination = (arr) => {
+    const pagination = document.querySelector('.my-pagination');
+
+    const paginationHTML = createPagination();
+    pagination.innerHTML = paginationHTML;
+
+    const pageLinks = pagination.querySelectorAll('.page-item');
+    const prev = document.querySelector('.prev');
+    const next = document.querySelector('.next');
+
+    updateTableRows(paginate(arr, itemsPerPage, currentPage));
+
+    for(const pageLink of pageLinks) {
+        pageLink.addEventListener('click', (event) => {
+            event.preventDefault();
+            const clickedLink = event.target.closest('.page-link');
+           
+            if(clickedLink.textContent === 'Anterior') {
+                currentPage--;
+                next.disabled = false;
+            } else if(clickedLink.textContent === 'Próximo') {
+                currentPage++;
+                prev.disabled = false;
+            }
+
+            const nextPageData = paginate(arr, itemsPerPage, currentPage);
+            if(nextPageData.length === 0) {
+                clickedLink.disabled = true;
+                return;
+            }
+
+            updateTableRows(nextPageData);
+
+            const prevLink = pagination.querySelector('.page-link.prev');
+            const nextLink = pagination.querySelector('.page-link.next');
+
+            if(currentPage === 1) {
+                prevLink.disabled = true;
+            } else {
+                prevLink.disabled = false;
+            }
+
+            if(currentPage === Math.ceil(arr.length / itemsPerPage)) {
+                nextLink.disabled = true;
+            } else {
+                nextLink.disabled = false;
+            }
+
+
+        })
+    }
+
+}
+
+const paginate = (arr, itemsPerPage, currentPage) => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    return arr.slice(startIndex, startIndex + itemsPerPage);
 }
 
 const initTableConfig = () => {
@@ -110,7 +181,6 @@ const updateTableRows = (arr) => {
     tbody.innerHTML = '';
 
     arr.forEach(item => {
-        console.log(item)
         const tr = document.createElement('tr');
         tr.innerHTML = `
             <td>${item.typeRevenue}</td>
