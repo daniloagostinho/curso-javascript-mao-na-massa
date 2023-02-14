@@ -2,7 +2,7 @@ class DialogContinuationRegistration extends HTMLElement {
     constructor() {
         super();
 
-        console.log('working -> ', this)
+        
 
         fetch('src/components/form-register/dialog-continuation-registration/DialogContinuationRegistration.html')
         .then(response => response.text())
@@ -12,11 +12,11 @@ class DialogContinuationRegistration extends HTMLElement {
     }
 
     connectedCallback () {
-        console.log('iniciou o componente')
+        ('iniciou o componente')
     }
 
     disconnectedCallback() {
-        console.log('destruiu o componente')
+        ('destruiu o componente')
     }
 }
 

@@ -2,7 +2,7 @@ class DialogUserNotFound extends HTMLElement {
     constructor() {
         super();
 
-        console.log('working -> ', this)
+        
 
         fetch('src/components/shared/dialog-user-not-found/DialogUserNotFound.html')
         .then(response => response.text())
@@ -12,11 +12,11 @@ class DialogUserNotFound extends HTMLElement {
     }
 
     connectedCallback () {
-        console.log('iniciou o componente')
+        ('iniciou o componente')
     }
 
     disconnectedCallback() {
-        console.log('destruiu o componente')
+        ('destruiu o componente')
     }
 }
 

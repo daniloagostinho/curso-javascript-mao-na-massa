@@ -2,7 +2,7 @@ class FormRegister extends HTMLElement {
     constructor() {
         super();
 
-        console.log('working -> ', this)
+        
 
         fetch('src/components/form-register/FormRegister.html')
         .then(response => response.text())
@@ -12,11 +12,11 @@ class FormRegister extends HTMLElement {
     }
 
     connectedCallback () {
-        console.log('iniciou o componente')
+        ('iniciou o componente')
     }
 
     disconnectedCallback() {
-        console.log('destruiu o componente')
+        ('destruiu o componente')
     }
 }
 
