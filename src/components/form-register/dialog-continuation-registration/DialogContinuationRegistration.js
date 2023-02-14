@@ -12,11 +12,11 @@ class DialogContinuationRegistration extends HTMLElement {
     }
 
     connectedCallback () {
-        ('iniciou o componente')
+        
     }
 
     disconnectedCallback() {
-        ('destruiu o componente')
+        
     }
 }
 

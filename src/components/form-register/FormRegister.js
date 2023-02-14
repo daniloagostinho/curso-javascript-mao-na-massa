@@ -12,11 +12,11 @@ class FormRegister extends HTMLElement {
     }
 
     connectedCallback () {
-        ('iniciou o componente')
+        
     }
 
     disconnectedCallback() {
-        ('destruiu o componente')
+        
     }
 }
 

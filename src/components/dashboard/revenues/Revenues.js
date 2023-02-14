@@ -1,10 +1,10 @@
-class DialogRequiredField extends HTMLElement {
+class Revenues extends HTMLElement {
     constructor() {
         super();
 
         
 
-        fetch('src/components/shared/dialog-required-field/DialogRequiredField.html')
+        fetch('src/components/dashboard/revenues/Revenues.html')
         .then(response => response.text())
         .then(text => this.innerHTML = text)
 
@@ -20,7 +20,6 @@ class DialogRequiredField extends HTMLElement {
     }
 }
 
-
 if('customElements' in window) {
-    customElements.define('app-dialog-required-field', DialogRequiredField)
+    customElements.define('app-revenues', Revenues)
 }

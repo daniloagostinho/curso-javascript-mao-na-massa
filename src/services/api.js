@@ -22,3 +22,12 @@ window.login = (url, user) => {
         
     })
 }
+
+window.gerRegisterRevenues = (url, param, user) => {
+    return fetch(url, {
+        headers: {
+            'month': param,
+            'user': user
+        }
+    })
+}

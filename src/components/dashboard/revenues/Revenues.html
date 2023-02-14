@@ -1,0 +1,51 @@
+<div class="container">
+  <div class="card">
+    <!-- INCLUIR APP-MONTHS-REVENUES -->
+    <div class="block-revenues-search" style="display: none;">
+      <br>
+      <label class="mat-label"><strong>Encontrar Receita:</strong></label>
+      <input
+        matInput
+        placeholder="Pesquisar Receita"
+      />
+    </div>
+    <br>
+    <button
+      color="primary"
+      class="btn-default btn btn-primary"
+    >
+      Adicionar Receita
+    </button>
+    <div class="display"></div>
+   
+    <div class="table-container">
+      <div class="d-flex justify-content-center">
+        <div class="spinner-border" style="width: 7rem; height: 7rem;" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="no-result" style="display: none;">
+      <div class="container">
+        <div class="center">
+          <span>Não foram encontrados itens na tabela..</span>
+        </div>
+      </div>
+    </div>
+    
+    <nav aria-label="Page navigation example" class="my-pagination" style="display: none;"></nav>
+
+    <div class="block-register-recipes" style="display: none;">
+      <div class="container">
+        <div class="center">
+          <span>Você ainda não cadastrou receitas para esse mês.</span>
+        </div>
+      </div>
+      
+    </div>
+    
+  </div>
+</div>
+
+<!-- INCLUIR APP-DIALOG-ADD-REVENUES -->
