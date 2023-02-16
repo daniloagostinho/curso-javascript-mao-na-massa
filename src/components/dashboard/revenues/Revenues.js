@@ -217,6 +217,13 @@ const updateTableRows = (arr) => {
     })
 }
 
+
+const openDialogAddRevenues = () => {
+    const dialog = document.querySelector('.dialog-add-revenues');
+    dialog.click();
+}
+
+
 if('customElements' in window) {
     customElements.define('app-revenues', Revenues)
 }
