@@ -109,6 +109,49 @@ const disableFutureDates = () => {
   inputDate.max = maxDate;
 }
 
+const handleAddrevenues = (event) => {
+  event.preventDefault();
+
+  const {typeRevenues, value, dateEntry, fixedRevenue} = selectInputsDom();
+
+  if(!verifyFieldFill(typeRevenues, value, dateEntry, fixedRevenue)) {
+    const buttonAddRevenues = document.querySelector('.add-revenues')
+    buttonAddRevenues.removeAttribute('data-dismiss');
+    alert('Preencha os campos vazios!');
+    return;
+  } 
+
+  fixedRevenue ? registerFixedRecipe() : registerMonthlyRecipe();
+}
+
+
+const registerFixedRecipe = () => {
+  console.log('registrar receita fixa -->> ')
+}
+
+const registerMonthlyRecipe = () => {
+  console.log('registrar receita para mes atual -->> ')
+}
+
+const verifyFieldFill = (typeRevenues, value, dateEntry, fixedRevenue) => 
+  typeRevenues !== '' && value !== '' && value !== undefined && dateEntry !== '' && !fixedRevenue !== '';
+
+const selectInputsDom = () => {
+  const typeRevenues = document.querySelector('.typeRevenue').value;
+  let value = 100;
+  const dateEntry = document.querySelector('.dateEntry').value;
+  const fixedRevenue = document.querySelector('.fixedRevenue').checked;
+  const user = localStorage.getItem('user');
+  
+
+  return {
+    typeRevenues,
+    value,
+    dateEntry,
+    fixedRevenue,
+    user
+  }
+}
 
 if ("customElements" in window) {
   customElements.define("app-dialog-add-revenues", DialogAddRevenues);
