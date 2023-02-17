@@ -7,14 +7,13 @@
       <input
         matInput
         placeholder="Pesquisar Receita"
-        oninput="searchRevenues(event)"
       />
     </div>
     <br>
     <button
       color="primary"
       class="btn-default btn btn-primary"
-      onclick="openDialogAddRevenues()"
+      onclick="openDialogAddRevenues(event)"
     >
       Adicionar Receita
     </button>
@@ -44,7 +43,6 @@
           <span>Você ainda não cadastrou receitas para esse mês.</span>
         </div>
       </div>
-
     </div>
     
   </div>
