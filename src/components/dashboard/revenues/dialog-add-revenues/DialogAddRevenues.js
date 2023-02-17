@@ -12,6 +12,7 @@ class DialogAddRevenues extends HTMLElement {
   connectedCallback() {
     setTimeout(() => {
       createSelectElement();
+      disableFutureDates();
     }, 1000);
   }
 
@@ -85,6 +86,29 @@ const formatCurrency = (event) => {
   event.target.value = currency;
 
 }
+
+
+const disableFutureDates = () => {
+  const inputDate = document.querySelector('.dateEntry');
+  const date = new Date();
+
+  let month = date.getMonth() + 1;
+  let day = date.getDate();
+  let year = date.getFullYear();
+
+  if(month < 10) {
+    month = '0' + month.toString();
+  }
+
+  if(day < 10) {
+    day = '0' + day.toString();
+  }
+
+  let maxDate = year + '-' + month + '-' + day
+
+  inputDate.max = maxDate;
+}
+
 
 if ("customElements" in window) {
   customElements.define("app-dialog-add-revenues", DialogAddRevenues);
