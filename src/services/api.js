@@ -31,3 +31,11 @@ window.getRegisterRevenues = (url, param, user) => {
         }
     })
 }
+
+window.registerRevenues = (url, revenue) => {
+    return fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(revenue),
+        headers: {'Content-type': 'application/json'}
+    })
+}
