@@ -19,7 +19,7 @@ class DialogAddRevenues extends HTMLElement {
   disconnectedCallback() {}
 }
 
-const typeRevenues = [
+const typeRevenue = [
   {
     name: "Investimento",
   },
@@ -46,6 +46,23 @@ const typeRevenues = [
   },
 ];
 
+let valueDialogAddRevenues;
+
+let months = [
+  'Janeiro',
+  'Fevereiro',
+  'Março',
+  'Abril',
+  'Maio',
+  'Junho',
+  'Julho',
+  'Agosto',
+  'Setembro',
+  'Outubro',
+  'Novembro',
+  'Dezembro',
+]
+
 const createSelectElement = () => {
   const label = document.createElement("label");
   label.textContent = "Tipo de Receita";
@@ -60,7 +77,7 @@ const createSelectElement = () => {
   optionSelected.selected = true;
   optionSelected.textContent = "Selecione o tipo de receita";
 
-  const options = typeRevenues
+  const options = typeRevenue
     .filter((_, index) => index <= 7)
     .map(revenue => {
       const option = document.createElement('option');
@@ -82,6 +99,9 @@ const formatCurrency = (event) => {
   const currency = new Intl.NumberFormat('pt-BR', {
     style: 'currency', currency: 'BRL'
   }).format(parseFloat(filterValue / 100))
+
+  
+  valueDialogAddRevenues = parseFloat(filterValue / 100)
 
   event.target.value = currency;
 
@@ -112,9 +132,9 @@ const disableFutureDates = () => {
 const handleAddrevenues = (event) => {
   event.preventDefault();
 
-  const {typeRevenues, value, dateEntry, fixedRevenue} = selectInputsDom();
+  const {typeRevenue, value, dateEntry, fixedRevenue} = selectInputsDom();
 
-  if(!verifyFieldFill(typeRevenues, value, dateEntry, fixedRevenue)) {
+  if(!verifyFieldFill(typeRevenue, value, dateEntry, fixedRevenue)) {
     const buttonAddRevenues = document.querySelector('.add-revenues')
     buttonAddRevenues.removeAttribute('data-dismiss');
     alert('Preencha os campos vazios!');
@@ -124,28 +144,56 @@ const handleAddrevenues = (event) => {
   fixedRevenue ? registerFixedRecipe() : registerMonthlyRecipe();
 }
 
+const searchIndexMonth = (monthSearch) => {
+  return months.findIndex(month => month === monthSearch);
+}
 
-const registerFixedRecipe = () => {
-  console.log('registrar receita fixa -->> ')
+
+const registerFixedRecipe = async () => {
+  const dateEntry = document.querySelector('.dateEntry').value;
+  const dateReplace = dateEntry.replace(/-/g, '$').split('$');
+  const selectInputs = selectInputsDom();
+
+  for(const month of months) {
+    const dateEntry = new Date(dateReplace[0], searchIndexMonth(month), dateReplace[2]);
+
+    const payload = {
+      user: {
+        title: selectInputs.user,
+        month: {
+          title: month,
+          listMonth: {
+            typeRevenue: selectInputs.typeRevenue,
+            value: valueDialogAddRevenues,
+            dateEntry: dateEntry
+          },
+        },
+      },
+    }
+    console.log(payload)
+    
+  }
+
+
 }
 
 const registerMonthlyRecipe = () => {
   console.log('registrar receita para mes atual -->> ')
 }
 
-const verifyFieldFill = (typeRevenues, value, dateEntry, fixedRevenue) => 
-  typeRevenues !== '' && value !== '' && value !== undefined && dateEntry !== '' && !fixedRevenue !== '';
+const verifyFieldFill = (typeRevenue, value, dateEntry, fixedRevenue) => 
+  typeRevenue !== '' && value !== '' && value !== undefined && dateEntry !== '' && !fixedRevenue !== '';
 
 const selectInputsDom = () => {
-  const typeRevenues = document.querySelector('.typeRevenue').value;
-  let value = 100;
+  const typeRevenue = document.querySelector('.typeRevenue').value;
+  let value = valueDialogAddRevenues;
   const dateEntry = document.querySelector('.dateEntry').value;
   const fixedRevenue = document.querySelector('.fixedRevenue').checked;
   const user = localStorage.getItem('user');
-  
 
+  
   return {
-    typeRevenues,
+    typeRevenue,
     value,
     dateEntry,
     fixedRevenue,
